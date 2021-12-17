@@ -73,23 +73,33 @@ function colorTimeBlocks() {
   }
 }
 
+// function to save contents of each text area on click of save button
+function saveTextArea() {
+var textAreaEntries = [];
+var textArea = $("textarea");
+for (let i = 0; i < hours.length; i++) {
+  textAreaEntries.push($(textArea[i]).val().trim());
+}
+  localStorage.setItem("text", JSON.stringify(textAreaEntries));
+}
 
-// function saveTextArea() {
-//   var textAreaEntries = [];
-//   var textArea = $("textarea");
-// for (let i = 0; i < hours.length; i++) {
-//   textAreaEntries.push($(textArea[i]).val().trim());
-//   console.log(textAreaEntries);
-// }
-//   localStorage.setItem("text", JSON.stringify(textAreaEntries));
-//   var storedText = JSON.parse(localStorage.getItem(textAreaEntries));
-// }
+// function to add text back to text areas from local storage
+function addText(){
+  if (localStorage.getItem("text") !== null) {
+    var textArea = $("textarea");
+    var retrievedArray = (JSON.parse(localStorage.getItem("text")));
+    for (let i = 0; i < retrievedArray.length; i++) {
+      $(textArea[i]).text(retrievedArray[i])
+    }
+  }
+}
 
 function onLoad() {
   setTime();
   setInterval(setTime, 1000);
   createBody();
   colorTimeBlocks();
+  addText();
 }
 
 
